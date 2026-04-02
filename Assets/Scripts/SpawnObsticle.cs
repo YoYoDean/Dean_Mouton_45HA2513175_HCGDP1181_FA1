@@ -9,6 +9,7 @@ public class SpawnObsticle : MonoBehaviour
     public List<GameObject> objects = new List<GameObject>();
     private BoxCollider boxCollider;
     private GameObject ground;
+    
 
     void Awake()
     {
@@ -18,17 +19,20 @@ public class SpawnObsticle : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        boxCollider.enabled = false;
+        //boxCollider.enabled = false;
         if (other.CompareTag("Player"))
         {
             Spawn();
+            PlatSpawn.instance.NewPlatSpawn();
             Debug.Log("Spawned");
         }
     }
 
+    
+
     void Spawn()
     {
-        for(int i = 0 , j = 0; i < 20 ; i++)
+        for(int i = 0 , j = -2; i < 18 ; i++)
         {
             randObj = Random.Range(0, objects.Count);
             xcor = j;

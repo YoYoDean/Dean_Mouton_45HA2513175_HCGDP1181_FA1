@@ -1,16 +1,26 @@
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
-    private bool grounded = false;
+    public bool grounded = false;
     public float jumpSpeed = 5f;
+    public float groundDistance = 0.2f;
+    public LayerMask groundLayer;
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        grounded = Physics.Raycast(transform.position, Vector3.down, groundDistance, groundLayer);
+        //Debug.DrawRay(transform.position, Vector3.down*10, Color.red);
     }
 
     public void MoveRight()
@@ -31,11 +41,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Jump()
+    public void Jump(InputAction.CallbackContext context)
     {
-            if (grounded)
+            if (context.performed)
             {
+                if(grounded)
+                {
+                Debug.Log("Jump");
                 rb.AddForce(Vector3.up * jumpSpeed);
+                }
             }
     }
 
