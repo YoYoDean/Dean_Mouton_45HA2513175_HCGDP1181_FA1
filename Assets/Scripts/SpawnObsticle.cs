@@ -41,7 +41,12 @@ public class SpawnObsticle : MonoBehaviour
             if(x == 1) zcor = 0;
             if(x == 2) zcor = 2;
             Vector3 spwanCoor = new Vector3(xcor , .5f, zcor);
-            Instantiate(objects[randObj],spwanCoor, Quaternion.identity, ground.transform);
+            int randSpawn = Random.Range(0,2);
+            if(randSpawn == 1)
+            {
+                Instantiate(objects[randObj],spwanCoor, Quaternion.identity, ground.transform);
+            }
+
             j--;
 
         }

@@ -1,16 +1,20 @@
-using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
-    public bool grounded = false;
-    public float jumpSpeed = 5f;
-    public float groundDistance = 0.2f;
+
+    [Header("Jump Settings")]
+    public float jumpForce = 5f;
+    public float groundDistance = 0.3f;
     public LayerMask groundLayer;
 
+    [Header("Lane Settings")]
+    private int currentLane = 0; // 
+    private float laneDistance = 2f;
+
+    private bool grounded;
 
     void Awake()
     {
@@ -19,39 +23,49 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        // Ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, groundDistance, groundLayer);
-        //Debug.DrawRay(transform.position, Vector3.down*10, Color.red);
     }
 
-    public void MoveRight()
+    public void MoveRight(InputAction.CallbackContext context)
+{
+    if (!context.performed) return;
+
+    if (currentLane < 1)
     {
-        Vector3 right = new Vector3(0,0,1);
-        if(!(rb.transform.position.z == 2))
-        {
-            rb.Move(rb.transform.position + right , Quaternion.identity);
-        }
+        currentLane++;
+        UpdatePosition();
+    }
+}
+
+public void MoveLeft(InputAction.CallbackContext context)
+{
+    if (!context.performed) return;
+
+    if (currentLane > -1)
+    {
+        currentLane--;
+        UpdatePosition();
+    }
+}
+
+    void UpdatePosition()
+    {
+        Vector3 newPos = new Vector3(
+            rb.position.x,
+            rb.position.y,
+            currentLane * laneDistance 
+        );
+
+        rb.position = newPos;
     }
 
-    public void MoveLeft()
-    {
-        Vector3 left = new Vector3(0,0,-1);
-        if(!(rb.transform.position.z == -2))
-        {
-            rb.Move(rb.transform.position + left, Quaternion.identity);
-        }
-    }
 
     public void Jump(InputAction.CallbackContext context)
     {
-            if (context.performed)
-            {
-                if(grounded)
-                {
-                Debug.Log("Jump");
-                rb.AddForce(Vector3.up * jumpSpeed);
-                }
-            }
+        if (context.performed && grounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
-
 }
-

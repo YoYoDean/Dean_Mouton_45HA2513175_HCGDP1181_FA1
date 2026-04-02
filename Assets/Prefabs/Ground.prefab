@@ -52,8 +52,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.1576138, y: 4.562345, z: 9.358992}
-  m_Center: {x: -0.64321375, y: 0.83949065, z: -0.5155573}
+  m_Size: {x: 0.80327046, y: 5.3194213, z: 9.358992}
+  m_Center: {x: 0.533958, y: 2.3843973, z: -0.5155573}
 --- !u!114 &5307179135899992036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1234,7 +1234,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 169
+  m_VersionIndex: 187
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1379,7 +1379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac0f090e0d7f254e8d5795385e3bba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 5
 --- !u!1 &7424261403800333753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1628,7 +1628,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 954
+  m_VersionIndex: 972
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1980,7 +1980,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 538
+  m_VersionIndex: 556
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
