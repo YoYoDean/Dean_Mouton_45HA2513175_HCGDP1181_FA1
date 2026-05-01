@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class SpawnObsticle : MonoBehaviour
 {
-    private int xcor ;
-    private int zcor ;
-    private int randObj;
     public List<GameObject> objects = new List<GameObject>();
+
     private BoxCollider boxCollider;
     private GameObject ground;
-    
+
+    private float lastZ = 999f; // space control
+    private float minZSpacing = 1.2f;
 
     void Awake()
     {
@@ -19,38 +20,66 @@ public class SpawnObsticle : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        //boxCollider.enabled = false;
         if (other.CompareTag("Player"))
         {
+            boxCollider.enabled = false; // prevent multiple triggers
+
             Spawn();
             PlatSpawn.instance.NewPlatSpawn();
+
             Debug.Log("Spawned");
         }
     }
 
-    
+    void OnTriggerExit(Collider other)
+    {
+            boxCollider.enabled = true;
+        
+    }
 
     void Spawn()
     {
-        for(int i = 0 , j = -2; i < 18 ; i++)
+        for (int i = 0, j = -2; i < 18; i++, j--)
         {
-            randObj = Random.Range(0, objects.Count);
-            xcor = j;
-            int x = Random.Range(0,3);
-            if(x == 0) zcor = -2;
-            if(x == 1) zcor = 0;
-            if(x == 2) zcor = 2;
-            Vector3 spwanCoor = new Vector3(xcor , .5f, zcor);
-            int randSpawn = Random.Range(0,2);
-            if(randSpawn == 1)
+            // Decide if this row should have a gap
+            if (Random.value < 0.25f)
+                continue;
+
+            //Pick a Z position with spacing control
+            float zcor;
+            int attempts = 0;
+
+            do
             {
-                Instantiate(objects[randObj],spwanCoor, Quaternion.identity, ground.transform);
+                zcor = Random.Range(-3f, 3f);
+                attempts++;
             }
+            while (Mathf.Abs(zcor - lastZ) < minZSpacing && attempts < 10);
 
-            j--;
+            lastZ = zcor;
 
+            //Randomly decide obstacle type
+            int randObj = Random.Range(0, objects.Count);
+
+            //Spawn chance controls densit
+            if (Random.value < 0.7f)
+            {
+                Vector3 spawnCoor = new(j, 0f, zcor);
+
+                GameObject obj = Instantiate(
+                    objects[randObj],
+                    spawnCoor,
+                    Quaternion.identity,
+                    ground.transform
+                );
+
+                // OPTIONAL: Random height (jump mechanic)
+                // some obstacles require jumping
+                if (Random.value < 0.4f)
+                {
+                    obj.transform.position += Vector3.up * Random.Range(0.5f, 1.5f);
+                }
+            }
         }
     }
-
-
 }

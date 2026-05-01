@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     private float laneDistance = 2f;
 
     private bool grounded;
+    private bool isPressed;
+    public Transform player;
 
     void Awake()
     {
@@ -27,37 +29,42 @@ public class PlayerMovement : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, groundDistance, groundLayer);
     }
 
-    public void MoveRight(InputAction.CallbackContext context)
-{
-    if (!context.performed) return;
+    public void MoveRight(){
+    //if (!context.performed) return;
 
-    if (currentLane < 1)
+    if (!isPressed)
     {
-        currentLane++;
-        UpdatePosition();
+        Debug.Log(player.position);
+        currentLane += 2 ;
+        //Vector3 currPos = new Vector3(4.5f, 0.7f, currentLane);
+        Vector3 newPos = new(0, 0, 2);
+        Vector3 newposition = player.position + newPos;
+        player.transform.position = newposition ;
     }
 }
 
-public void MoveLeft(InputAction.CallbackContext context)
+public void MoveLeft()
 {
-    if (!context.performed) return;
+    //if (!context.performed) return;
 
-    if (currentLane > -1)
+    if (!isPressed)
     {
-        currentLane--;
-        UpdatePosition();
+        Debug.Log(player.position);
+        currentLane -= 2;
+        //UpdatePosition();
+        //Vector3 currPos = new Vector3(4.5f, 0.7f, currentLane);
+        Vector3 newPos = new(0, 0, -2);
+        Vector3 newposition = player.position + newPos;
+        player.transform.position = newposition ;
     }
+    
 }
 
     void UpdatePosition()
     {
-        Vector3 newPos = new Vector3(
-            rb.position.x,
-            rb.position.y,
-            currentLane * laneDistance 
-        );
+        Vector3 newPos = new Vector3(transform.position.x, transform.position.y, currentLane * laneDistance );
 
-        rb.position = newPos;
+        gameObject.transform.Translate(newPos);
     }
 
 

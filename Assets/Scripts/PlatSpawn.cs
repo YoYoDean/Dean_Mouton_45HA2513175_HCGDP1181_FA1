@@ -23,7 +23,7 @@ public class PlatSpawn : MonoBehaviour
 
         float newX = lastPlatform.transform.position.x - platformLength;
 
-        Vector3 spawnPos = new Vector3(newX, 0, 0);
+        Vector3 spawnPos = new(newX, -0.7f, 0);
         GameObject newPlat = Instantiate(platform, spawnPos, Quaternion.identity);
 
         lastPlatform = newPlat;

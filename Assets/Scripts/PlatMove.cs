@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlatMove : MonoBehaviour
 {
     private Rigidbody rb;
