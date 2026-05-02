@@ -13,7 +13,7 @@ public class CamFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        this.transform.position = player.TransformPoint(CamOffset);
+        this.transform.position = player.transform.position;
         
         Quaternion offsetRot = Quaternion.Euler(camRot);
 

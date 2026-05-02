@@ -2,15 +2,14 @@ using UnityEngine;
 
 public class WaterBottle : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (other.CompareTag("Player"))
+        {
+            GameManager.instance.hydration += 20;
+            UiManager.instance.UpdateHydration(GameManager.instance.hydration);
+            Destroy(this.gameObject);
+        }
+        //ill later add press e to pickup water
     }
 }

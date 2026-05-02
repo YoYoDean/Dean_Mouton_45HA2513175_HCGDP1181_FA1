@@ -328,6 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b713d67c72f3f14f94920c5ba509825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hydration: 100
 --- !u!1 &738250896
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,8 +470,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278255365
-  m_fontColor: {r: 0.021381378, g: 1, b: 0, a: 1}
+    rgba: 4280873711
+  m_fontColor: {r: 0.9372549, g: 0.9490196, b: 0.15686275, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -622,6 +623,7 @@ MonoBehaviour:
   score: {fileID: 0}
   highScoreMain: {fileID: 0}
   highScoreGameOver: {fileID: 838591782}
+  hydration: {fileID: 0}
   iScore: 0
 --- !u!1 &1435817445
 GameObject:
@@ -689,8 +691,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4280873711
+  m_fontColor: {r: 0.9372549, g: 0.9490196, b: 0.15686275, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1065,7 +1067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.54901963, g: 0.3372549, b: 0.05490196, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1198,7 +1200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.54901963, g: 0.3372549, b: 0.05490196, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1368,8 +1370,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4280873711
+  m_fontColor: {r: 0.9372549, g: 0.9490196, b: 0.15686275, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

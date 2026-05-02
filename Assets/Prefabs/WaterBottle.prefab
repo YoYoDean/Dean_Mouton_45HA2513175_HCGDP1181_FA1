@@ -1333,6 +1333,7 @@ GameObject:
   - component: {fileID: 4206760827381003098}
   - component: {fileID: 8791243514038340268}
   - component: {fileID: 6139374512540320008}
+  - component: {fileID: 7154823727810407494}
   m_Layer: 8
   m_Name: WaterBottle
   m_TagString: WaterBottle
@@ -5063,10 +5064,22 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &7154823727810407494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5363931641813782927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e420dd48a55b98b40a89df233c965d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

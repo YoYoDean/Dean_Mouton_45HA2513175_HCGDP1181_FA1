@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private float highScore;
+    public float hydration = 100;
     public static GameManager instance;
 
 
@@ -28,6 +29,31 @@ public class GameManager : MonoBehaviour
         }
     }
 }
+
+    void Update()
+    {
+
+        if(SceneManager.GetActiveScene().name == "FA2")
+        {
+        if(hydration > 0) 
+        {
+            hydration -= Time.deltaTime/2;
+            UiManager.instance.UpdateHydration(hydration);
+        }
+        if(hydration > 100) 
+        {
+            Debug.Log("Hydration Boost ---- Heath Increasing");
+            Health.instance.playerHealth += Time.deltaTime;
+            UiManager.instance.UpdateHealth(Health.instance.playerHealth);
+        }
+        if(hydration <= 20) 
+        {
+            Debug.Log("Dehydrated ----- Find Water");
+            Health.instance.playerHealth += Time.deltaTime/2;
+            UiManager.instance.UpdateHealth(Health.instance.playerHealth);
+        }
+        }
+    }
 
 
     public void UpdateHighScore()

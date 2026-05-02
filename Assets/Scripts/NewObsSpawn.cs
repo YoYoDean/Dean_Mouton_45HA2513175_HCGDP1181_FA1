@@ -23,7 +23,7 @@ public class NewObsSpawn : MonoBehaviour
             float zCor = Random.Range(areaZSize.x, areaZSize.y);
 
             GameObject objToSpawn = objects[Random.Range(0, objects.Count - 1)];
-            Debug.Log(xCor + "" + zCor + "" + objToSpawn);
+            //Debug.Log(xCor + "" + zCor + "" + objToSpawn);
 
             Instantiate(objToSpawn, new Vector3(xCor, 0, zCor), quaternion.identity);
         }

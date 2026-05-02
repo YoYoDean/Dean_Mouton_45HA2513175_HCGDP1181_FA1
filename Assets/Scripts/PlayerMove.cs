@@ -1,66 +1,101 @@
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
     [Header("Movement")]
     public float speed = 5f;
+    public float sprintMultiplier = 2f;
 
-    private Vector2 moveInput;
-    private Vector2 mouseMove;
-    private Rigidbody rb;
+    [Header("Mouse Look")]
     public float sens = 100f;
     public Transform cameraPivot;
-    private float xRotation = 0f;
 
+    [Header("Jump")]
+    public float jumpForce = 5f;
 
-    //public Rigidbody bullet;
-    //public Rigidbody bulletrb;
-    //public Transform muzzle;
-    //public BulletPool pool;
-    //public float bulletSpeed = 100f;
+    [Header("Ground Check")]
+    public Transform feet;
+    public float groundCheckDistance = 0.3f;
+    public LayerMask groundMask;
 
+    private Rigidbody rb;
 
-    
+    private Vector2 moveInput;
+    private Vector2 mouseInput;
+
+    private float xRotation;
+
+    private bool jumpPressed;
+    public bool isGrounded;
+
+    private float currentSpeed;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-    }
 
-    void FixedUpdate()
-    {
-        Walk();
+        currentSpeed = speed;
+
+        Cursor.lockState = CursorLockMode.Locked;
+
+        // Prevent physics rotation weirdness
+        rb.freezeRotation = true;
     }
 
     void Update()
     {
-        Mouse();
+        Look();
     }
 
-    void Walk()
+    void FixedUpdate()
     {
-        Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
-        Vector3 targetPosition = rb.position + move * speed * Time.fixedDeltaTime;
-        rb.MovePosition(targetPosition);
+        CheckGround();
+
+        Move();
+
+        if (jumpPressed && isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            jumpPressed = false; // one jump per press
+        }
     }
 
-    void Mouse()
+    void Move()
     {
-        float mouseX = mouseMove.x * sens * Time.deltaTime;
-        float mouseY = mouseMove.y * sens * Time.deltaTime;
+        Vector3 moveDir =
+            transform.right * moveInput.x +
+            transform.forward * moveInput.y;
+
+        Vector3 targetPos =
+            rb.position + moveDir * currentSpeed * Time.fixedDeltaTime;
+
+        rb.MovePosition(targetPos);
+    }
+
+    void Look()
+    {
+        float mouseX = mouseInput.x * sens * Time.deltaTime;
+        float mouseY = mouseInput.y * sens * Time.deltaTime;
 
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -100f, 100f);
+        xRotation = Mathf.Clamp(xRotation, -80f, 80f);
 
         cameraPivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+        // Only rotate on Y
         transform.Rotate(Vector3.up * mouseX);
     }
 
+    void CheckGround()
+    {
+        isGrounded = Physics.Raycast(
+            feet.position,
+            Vector3.down,
+            groundCheckDistance,
+            groundMask
+        );
+    }
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -69,43 +104,27 @@ public class PlayerMove : MonoBehaviour
 
     public void OnMouse(InputAction.CallbackContext context)
     {
-       mouseMove = context.ReadValue<Vector2>();
+        mouseInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            jumpPressed = true;
+        }
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            speed = (float)(speed * 2);
+            currentSpeed = speed * sprintMultiplier;
         }
-        if(context.canceled)
+
+        if (context.canceled)
         {
-            speed = (float)(speed / 2);
+            currentSpeed = speed;
         }
     }
-
-    //public void OnShoot(InputAction.CallbackContext context)
-    //{
-      //  if (context.performed)
-      //  {
-//            Shoot();
-       // }
-        
-    }
-
-    /*public void Shoot()
-{   
-    Debug.Log("Shoot");
-    Rigidbody rb = pool.GetBullet();
-
-    rb.transform.position = muzzle.position + muzzle.forward * 0.5f;
-    rb.transform.rotation = muzzle.rotation;
-
-    rb.gameObject.SetActive(true);
-
-    rb.linearVelocity = Vector3.zero; // reset old move
-    rb.angularVelocity = Vector3.zero;
-
-    rb.AddForce(muzzle.forward * bulletSpeed, ForceMode.Impulse);
 }
-*/

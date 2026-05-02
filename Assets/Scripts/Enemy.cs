@@ -6,45 +6,84 @@ public class EnemyAI : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Transform player;
+
+    [Header("Ranges")]
     public float seeRange = 10f;
     public float attackRange = 1.5f;
-    public float attackCooldown = 1f;
 
-    private float lastAttackTime = 0f;
+    [Header("Combat")]
+    public float attackCooldown = 1f;
+    public int damage = 30;
+
+    private float lastAttackTime;
 
     void Awake()
     {
-        GameObject playerob = GameObject.FindGameObjectWithTag("Player");
-        player = playerob.transform;
+        // Get player
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
+        else
+        {
+            Debug.LogError("Player with tag 'Player' not found!");
+        }
+
+        // Get NavMeshAgent
         agent = GetComponent<NavMeshAgent>();
+
+        // Stop before colliding with player
+        agent.stoppingDistance = attackRange;
+
+        // Let NavMesh handle rotation
+        agent.updateRotation = true;
     }
 
     void Update()
     {
+        if (player == null)
+            return;
+
         float distance = Vector3.Distance(transform.position, player.position);
 
-        if (distance <= seeRange)
+        // Player too far away = idle
+        if (distance > seeRange)
         {
-            //Debug.Log("Distance & Set Dest Player");
-            agent.SetDestination(player.position);
+            agent.ResetPath();
+            return;
+        }
 
-            if (distance <= attackRange && Time.time - lastAttackTime > attackCooldown)
+        // Chase player until attack range
+        if (distance > attackRange)
+        {
+            if (!agent.pathPending)
             {
-                Attack();
-                //Debug.Log("Attack");
-                lastAttackTime = Time.time;
+                agent.SetDestination(player.position);
             }
         }
+        // Attack when close enough
         else
         {
-            //Debug.Log("Idle");
-            agent.SetDestination(transform.position); // idle
+            agent.ResetPath();
+
+            if (Time.time >= lastAttackTime + attackCooldown)
+            {
+                Attack();
+                lastAttackTime = Time.time;
+            }
         }
     }
 
     void Attack()
     {
-        player.GetComponent<Health>().HurtPlayer(30);
+        Health health = player.GetComponent<Health>();
+
+        if (health != null)
+        {
+            health.HurtPlayer(damage);
+        }
     }
 
     void OnDrawGizmosSelected()
