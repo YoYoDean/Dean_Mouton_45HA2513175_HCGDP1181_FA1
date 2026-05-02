@@ -21,24 +21,35 @@ public class Health : MonoBehaviour
 
     }
 
-    public void HealPlayer()
+    public void HealPlayer() // 
     {
         playerHealth += 30;
-        UiManager.instance.UpdateHealth();
+        UiManager.instance.UpdateHealth(playerHealth);
+    }
+    public void EnergyDrink()
+    {
+       //put speed
+    }
+    public void Alcohol()
+    {
+        playerHealth *= 2;
+        UiManager.instance.UpdateHealth(playerHealth);
     }
     public void HurtPlayer(int hurtAmount)
     {
         playerHealth -= hurtAmount;
-        UiManager.instance.UpdateHealth();
+        UiManager.instance.UpdateHealth(playerHealth);
         if (playerHealth <= 0)
-        {
+        {   
+            GameManager.instance.UpdateHighScore();
+            
             Debug.Log("Player Killed!");
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            SceneManager.LoadScene("GameOver");
+            SceneManager.LoadScene("Game Over");
         }
     }
-    public void HurtEnemy(int hurtAmount)
+    /*public void HurtEnemy(int hurtAmount)
     {
         enemyHealth -= hurtAmount;
         if (enemyHealth <= 0)
@@ -49,6 +60,6 @@ public class Health : MonoBehaviour
             //uiManager.UpdateScore();
             Destroy(gameObject);
         }
-    }
+    }*/
 
 }
