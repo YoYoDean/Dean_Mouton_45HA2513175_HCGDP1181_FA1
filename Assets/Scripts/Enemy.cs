@@ -44,7 +44,7 @@ public class EnemyAI : MonoBehaviour
 
     void Attack()
     {
-        player.GetComponent<Health>().HurtPlayer(10);
+        player.GetComponent<Health>().HurtPlayer(30);
     }
 
     void OnDrawGizmosSelected()
