@@ -11,7 +11,7 @@ public class BottleTracker : MonoBehaviour
     public Vector2 areaZSize = new Vector2(-80,40);
     void Update()
     {
-        if(GameObject.FindGameObjectsWithTag("WaterBottle").Length <= 5)
+        if(GameObject.FindGameObjectsWithTag("WaterBottle").Length <= 3)
         {
             SpawnMoreWater();
         }
@@ -20,7 +20,7 @@ public class BottleTracker : MonoBehaviour
     void SpawnMoreWater()
     {
         Debug.Log("More Water Spawned!");
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++) //spawn 5 more water bottles
         {
             float xCor = Random.Range(areaXSize.x, areaXSize.y);
             float zCor = Random.Range(areaZSize.x, areaZSize.y);

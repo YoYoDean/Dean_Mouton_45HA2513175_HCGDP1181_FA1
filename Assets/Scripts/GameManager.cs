@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     private float highScore;
     public float hydration = 100;
+    public float npcRescue;
     public static GameManager instance;
 
 
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour
         {
         if(hydration > 0) 
         {
-            hydration -= Time.deltaTime/2;
+            hydration -= Time.deltaTime/2.5f;
             UiManager.instance.UpdateHydration(hydration);
         }
         if(hydration > 100) 
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour
         if(hydration <= 20) 
         {
             Debug.Log("Dehydrated ----- Find Water");
-            Health.instance.playerHealth += Time.deltaTime/2;
+            Health.instance.playerHealth -= Time.deltaTime/2;
             UiManager.instance.UpdateHealth(Health.instance.playerHealth);
         }
         }

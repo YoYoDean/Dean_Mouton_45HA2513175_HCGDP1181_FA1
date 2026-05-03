@@ -24,7 +24,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2239297785726214975
 Transform:
   m_ObjectHideFlags: 0
@@ -180,6 +180,7 @@ MonoBehaviour:
   seeRange: 100
   attackRange: 2
   attackCooldown: 1
+  damage: 30
 --- !u!114 &3228825863353387453
 MonoBehaviour:
   m_ObjectHideFlags: 0
